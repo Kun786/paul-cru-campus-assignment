@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataManagementServiceService } from 'src/app/SharedPortal/Services/data-management-service.service';
 
 export interface PeriodicElement {
   name: string;
@@ -27,11 +28,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class TableComponent implements OnInit {
 
-  constructor() { }
+  constructor( private _DataManagementService:DataManagementServiceService ) { }
 
   ngOnInit(): void {
+    this.GetData();
   }
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
+
+  GetData(){
+    this._DataManagementService.GetDataFromApi().subscribe((DataComingFromBackEnd:any) => {
+      console.log(DataComingFromBackEnd);
+    })
+  }
 }
